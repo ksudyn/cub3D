@@ -6,33 +6,32 @@
 /*   By: ksudyn <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:16:23 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/02/04 20:13:54 by ksudyn           ###   ########.fr       */
+/*   Updated: 2024/10/10 15:17:38 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	size_t		size_s1;
-	size_t		size_s2;
-	char		*str;
-	size_t		i;
-	size_t		j;
+	char	*dst;
+	size_t	lens1;
+	size_t	lens2;
+	size_t	i;
+	size_t	j;
 
-	size_s1 = ft_strlen(s1);
-	size_s2 = ft_strlen(s2);
-	str = malloc(sizeof(char) * (size_s1 + size_s2 + 1));
-	if (str == NULL)
-		return (NULL);
 	i = 0;
 	j = 0;
-	while (i < size_s1)
-		str[i++] = s1[j++];
-	j = 0;
-	while (j < size_s2)
-		str[i++] = s2[j++];
-	str[i] = '\0';
-	free(s1);
-	return (str);
+	lens1 = ft_strlen(s1);
+	lens2 = ft_strlen(s2);
+	if (!s1 && !s2)
+		return (NULL);
+	dst = ft_calloc(lens1 + lens2 + 1, sizeof(char));
+	if (!dst)
+		return (NULL);
+	while (s1[i++])
+		ft_memcpy(dst, s1, lens1);
+	while (s2[j++])
+		ft_memcpy(lens1 + dst, s2, lens2);
+	return (dst);
 }

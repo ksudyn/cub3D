@@ -12,77 +12,75 @@
 
 #include "libft.h"
 
-static char	**ft_free(char **result, size_t fail_pos)
+static int	cont_words(char *str, char c)
 {
-	size_t		i;
+	int	i;
+	int	words;
 
-	if (fail_pos > 0)
+	i = 0;
+	words = 0;
+	while (str[i])
 	{
-		i = fail_pos - 1;
-		while (i > 0)
-		{
-			free (result[i--]);
-		}
-		free(result[0]);
+		if (str[i] != c && (str[i + 1] == c || str[i + 1] == '\0'))
+			words++;
+		i++;
 	}
-	free(result);
-	return (NULL);
+	return (words);
 }
 
-static size_t	count_words(const char *s, char c)
+static int	free_str(char **str)
 {
-	size_t	count;
+	int	i;
 
-	count = 0;
-	while (*s)
+	i = 0;
+	while (str[i])
 	{
-		while (*s == c && *s)
-			s++;
-		if (*s && *s != c)
-		{
-			count++;
-			while (*s && *s != c)
-				s++;
-		}
+		free(str[i]);
+		i++;
 	}
-	return (count);
+	free(str);
+	return (0);
 }
 
-static char	*get_next_word(const char *s, char c)
+static int	write_str(char **res, char *str, char c)
 {
-	size_t	len;
+	int	i;
+	int	j;
+	int	words;
 
-	len = 0;
-	while (s[len] && s[len] != c)
-		len++;
-	return (ft_substr(s, 0, len));
+	i = 0;
+	words = 0;
+	while (str[i])
+	{
+		if (str[i] == c)
+			i++;
+		else
+		{
+			j = 0;
+			while (str[i + j] != c && str[i + j])
+				j++;
+			res[words] = ft_substr(str, i, j);
+			if (res[words] == NULL)
+				return (free_str(res));
+			i += j;
+			words++;
+		}
+	}
+	return (1);
 }
 
 char	**ft_split(char const *s, char c)
 {
-	size_t	i;
-	size_t	words;
-	char	**result;
+	int		words;
+	char	**res;
 
 	if (!s)
 		return (NULL);
-	i = 0;
-	words = count_words(s, c);
-	result = malloc((words + 1) * sizeof(char *));
-	if (!result)
+	words = cont_words((char *)s, c);
+	res = ft_calloc(words + 1, sizeof(char *));
+	if (!res)
 		return (NULL);
-	while (*s && i < words)
-	{
-		while (*s == c && *s)
-			s++;
-		if (*s)
-		{
-			result[i++] = get_next_word(s, c);
-			if (!result [i - 1])
-				return (ft_free(result, i - 1));
-		}
-		while (*s && *s != c)
-			s++;
-	}
-	return (result[i] = NULL, result);
+	if (!write_str(res, (char *)s, c))
+		return (NULL);
+	return (res);
 }

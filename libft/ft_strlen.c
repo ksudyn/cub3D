@@ -6,22 +6,18 @@
 /*   By: ksudyn <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 18:50:51 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/02/04 20:14:16 by ksudyn           ###   ########.fr       */
+/*   Updated: 2024/10/10 14:29:31 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlen(const char *str)
+int	ft_strlen(const char *str)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
-	if (str == NULL)
-		return (0);
-	while (str[i] != '\0')
-	{
+	while (str [i])
 		i++;
-	}
 	return (i);
 }
