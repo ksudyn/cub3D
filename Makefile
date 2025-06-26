@@ -6,7 +6,7 @@
 #    By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/25 20:00:22 by ksudyn            #+#    #+#              #
-#    Updated: 2025/06/25 20:50:25 by ksudyn           ###   ########.fr        #
+#    Updated: 2025/06/26 20:09:28 by ksudyn           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,10 @@ LIBFT_DIR = ./libft
 MLX_DIR = ./minilibx-linux
 INC_DIR = ./includes
 
-SRCS = src/parse.c
+SRCS =	src/error.c\
+		src/main.c\
+		src/parse.c\
+	
 
 OBJS = $(SRCS:.c=.o)
 

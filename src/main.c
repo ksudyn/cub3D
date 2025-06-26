@@ -1,19 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.c                                            :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/25 20:39:07 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/06/26 20:01:13 by ksudyn           ###   ########.fr       */
+/*   Created: 2025/06/26 19:17:33 by ksudyn            #+#    #+#             */
+/*   Updated: 2025/06/26 20:09:56 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-int is_valid_map_char(char c)
+void	init_struct(t_cub *cub)
 {
-    return (c == '0' || c == '1' || c == ' ' || c == 'N' || c == 'S'
-            || c == 'E' || c == 'W');
+	ft_bzero(cub, sizeof(t_cub));
+	cub->textures = ft_calloc(1, sizeof(t_textures));
+	cub->mlx = ft_calloc(1, sizeof(t_mlx));
+}
+
+int main(int argc, char **argv)
+{
+    t_cub   cub;
+    (void)argc;
+    (void)argv;
+    init_struct(&cub);
+    printf("aqui estoy\n");
 }
