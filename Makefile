@@ -6,7 +6,7 @@
 #    By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/25 20:00:22 by ksudyn            #+#    #+#              #
-#    Updated: 2025/06/26 20:09:28 by ksudyn           ###   ########.fr        #
+#    Updated: 2025/07/01 18:23:55 by ksudyn           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,9 +19,13 @@ LIBFT_DIR = ./libft
 MLX_DIR = ./minilibx-linux
 INC_DIR = ./includes
 
-SRCS =	src/error.c\
+SRCS =	src/dimensions.c\
+		src/error.c\
+		src/flood_fill.c\
 		src/main.c\
 		src/parse.c\
+		src/utils_parse.c\
+		src/validate_map.c\
 	
 
 OBJS = $(SRCS:.c=.o)

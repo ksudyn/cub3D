@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksudyn <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 19:50:02 by ksudyn            #+#    #+#             */
-/*   Updated: 2024/10/11 20:03:20 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/07/01 18:10:44 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
+# include <stddef.h>
+# include <stdint.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
-# include <stdint.h>
-# include <stddef.h>
 
 int					ft_isalpha(int c);
 int					ft_isdigit(int c);
@@ -64,6 +64,11 @@ typedef struct s_list
 	void			*content;
 	struct s_list	*next;
 }					t_list;
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
+char				*get_next_line(int fd);
 
 t_list				*ft_lstnew(void *content);
 void				ft_lstadd_front(t_list **lst, t_list *new);
