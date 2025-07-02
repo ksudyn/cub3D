@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 16:08:09 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/07/01 20:41:00 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/07/02 20:44:24 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,13 @@ void	flood_fill(t_cub *game, int x, int y, char **map_copy)
 		ft_error(1);
 		exit(1);
 	}
-    	if (map_copy[y][x] == ' ')
+    if (map_copy[y][x] == ' ')
 	{
 		ft_error(1);
 		exit(1);
 	}
-	if (map_copy[y][x] == '1' || map_copy[y][x] == 'V' || map_copy[y][x] == ' ')
+	if (map_copy[y][x] == '1' || map_copy[y][x] == 'V'
+		|| map_copy[y][x] == ' ')
 		return ;
 	map_copy[y][x] = 'V';
 	flood_fill(game, x + 1, y, map_copy);

@@ -6,12 +6,19 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 19:47:05 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/07/01 20:47:11 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/07/02 20:40:38 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
+
+# define T_NORTH "./textures/north.xpm"
+# define T_SOUTH "./textures/south.xpm"
+# define T_EAST  "./textures/east.xpm"
+# define T_WEST  "./textures/west.xpm"
+
+# define CELL_SIZE 64
 
 # include "../libft/libft.h"
 # include "../minilibx-linux/mlx.h"
@@ -28,12 +35,13 @@ typedef struct s_mlx
 	void		*mlx_win;
 	void		*img;
 }				t_mlx;
+
 typedef struct s_textures
 {
-	char		*nort;
-	char		*south;
-	char		*eats;
-	char		*west;
+	void		*nort;
+	void		*south;
+	void		*eats;
+	void		*west;
 }				t_textures;
 
 typedef struct s_cub
@@ -49,6 +57,11 @@ typedef struct s_cub
 	t_mlx		*mlx;
 }				t_cub;
 
+//....check_map.c....//
+int				check_valid_chars(t_cub *game);
+int				check_player_count(t_cub *game);
+int				check_top_bottom_walls(t_cub *game);
+int				check_side_walls(t_cub *game);
 //....dimensions.c....//
 int				dimensions(char *line, char ***map, int *height, t_cub *cub);
 //....error.c....//
@@ -58,12 +71,10 @@ void			flood_fill(t_cub *game, int x, int y, char **map_copy);
 char			**copy_map(char **map, int height);
 void			free_matrix(char **matrix);
 int				check_closed_map(t_cub *game);
+//....load_map.c....//
+char			**load_map(const char *file, t_cub *cub);
 //....parse.c....//
 int				normalize_map(t_cub *game);
-int				check_valid_chars(t_cub *game);
-int				check_player_count(t_cub *game);
-int				check_top_bottom_walls(t_cub *game);
-int				check_side_walls(t_cub *game);
 //....utils_parse.c....//
 int				is_valid_map_char(char c);
 int				is_player(char c);

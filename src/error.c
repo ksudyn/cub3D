@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 19:44:30 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/07/01 20:00:25 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/07/02 16:04:32 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,5 @@ int	ft_error(int i)
 		printf("Error: Memory\n");
 	if (i == 10)
 		printf("Error: Number of argument\n");
-	return (1);
+	return (0);
 }

@@ -6,13 +6,13 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 16:07:49 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/07/01 20:24:23 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/07/02 15:59:12 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-int validate_map(t_cub *game)
+int 	validate_map(t_cub *game)
 {
 	if (!normalize_map(game))
 		return (0);
