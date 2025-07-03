@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 19:47:05 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/07/02 20:40:38 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/07/03 17:27:47 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # define T_EAST  "./textures/east.xpm"
 # define T_WEST  "./textures/west.xpm"
 
+# define WIDTH 1280
+# define HEIGHT 1200
 # define CELL_SIZE 64
 
 # include "../libft/libft.h"
@@ -29,18 +31,33 @@
 # include <sys/time.h> // gettimeofday
 # include <unistd.h>   // read, write, close
 
+typedef struct s_image
+{
+    void    *img;
+    char    *data;
+    int     width;
+    int     height;
+    int     bpp;
+    int     size_line;
+    int     endian;
+}               t_image;
+
 typedef struct s_mlx
 {
 	void		*mlx;
 	void		*mlx_win;
 	void		*img;
+	char		*data;
+	int			bpp;
+	int			size_line;
+	int			endian;
 }				t_mlx;
 
 typedef struct s_textures
 {
-	void		*nort;
+	void		*north;
 	void		*south;
-	void		*eats;
+	void		*east;
 	void		*west;
 }				t_textures;
 
@@ -55,6 +72,7 @@ typedef struct s_cub
 
 	t_textures	*textures;
 	t_mlx		*mlx;
+	t_image		image[4];
 }				t_cub;
 
 //....check_map.c....//
@@ -66,6 +84,7 @@ int				check_side_walls(t_cub *game);
 int				dimensions(char *line, char ***map, int *height, t_cub *cub);
 //....error.c....//
 int				ft_error(int i);
+int 			ft_error_mlx(int i);
 //....flood_fill.c....//
 void			flood_fill(t_cub *game, int x, int y, char **map_copy);
 char			**copy_map(char **map, int height);
