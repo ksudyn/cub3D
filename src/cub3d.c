@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 16:01:22 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/07/03 16:44:51 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/07/04 16:30:12 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,10 @@ int     cub3d(t_cub *cub)
     cub->mlx->data = mlx_get_data_addr(cub->mlx->img, &cub->mlx->bpp,
                     &cub->mlx->size_line, &cub->mlx->endian);
 
-    if(load_images(cub) == 1)
+    if(load_textures(cub) == 1)
         return(1);
     mlx_put_image_to_window(cub->mlx->mlx, cub->mlx->mlx_win,
             cub->mlx->img, 0, 0);
     mlx_loop(cub->mlx->mlx);
+    return(0);
 }

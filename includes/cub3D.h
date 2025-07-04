@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 19:47:05 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/07/03 17:27:47 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/07/04 15:54:21 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,12 @@
 # define WIDTH 1280
 # define HEIGHT 1200
 # define CELL_SIZE 64
+#define NORTH 0
+#define SOUTH 1
+#define EAST  2
+#define WEST  3
+
+#define NUM_TEXTURES 4
 
 # include "../libft/libft.h"
 # include "../minilibx-linux/mlx.h"
@@ -33,14 +39,14 @@
 
 typedef struct s_image
 {
-    void    *img;
-    char    *data;
-    int     width;
-    int     height;
-    int     bpp;
-    int     size_line;
-    int     endian;
-}               t_image;
+	void	*img;         // puntero a la imagen MLX
+	char	*data;        // dirección de los píxeles
+	int		width;        // ancho de la imagen
+	int		height;       // alto de la imagen
+	int		bpp;          // bits por píxel
+	int		size_line;    // cantidad de bytes por fila
+	int		endian;       // orden de bytes (endianness)
+}				t_image;
 
 typedef struct s_mlx
 {
@@ -72,7 +78,8 @@ typedef struct s_cub
 
 	t_textures	*textures;
 	t_mlx		*mlx;
-	t_image		image[4];
+	char	*textures_path[NUM_TEXTURES];
+	t_image		image[NUM_TEXTURES];
 }				t_cub;
 
 //....check_map.c....//
@@ -99,5 +106,8 @@ int				is_valid_map_char(char c);
 int				is_player(char c);
 //....validate_map.c....//
 int				validate_map(t_cub *game);
+
+int	load_textures(t_cub *cub);
+int     cub3d(t_cub *cub);
 
 #endif
