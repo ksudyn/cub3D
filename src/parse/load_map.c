@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 15:33:05 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/07/04 16:28:43 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/07/07 20:50:25 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,44 @@ void	remove_newline(char *line)
 		line[len - 1] = '\0';
 }
 
+int	is_texture_line(char *line)
+{
+	return
+	(
+		ft_strncmp(line, "NO", 2) == 0 ||
+		ft_strncmp(line, "SO", 2) == 0 ||
+		ft_strncmp(line, "WE", 2) == 0 ||
+		ft_strncmp(line, "EA", 2) == 0
+	);
+}
+
+int	process_line(char **line_ptr, char ***map, int *height, t_cub *cub)
+{
+	char	*line;
+
+	line = *line_ptr;
+	remove_newline(line);
+	if (line[0] == '\0')
+	{
+		free(line);
+		return (1);
+	}
+	if (is_texture_line(line))
+		parse_texture_line(line, cub);
+	else if (line[0] == 'F' || line[0] == 'C')
+		parse_color_line(line, cub);
+	else
+	{
+		if (!dimensions(line, map, height, cub))
+		{
+			free(line);
+			free_matrix(*map);
+			return (0);
+		}
+	}
+	return (1);
+}
+
 char	**read_map_lines(int fd, t_cub *cub)
 {
 	char	*line;
@@ -32,13 +70,9 @@ char	**read_map_lines(int fd, t_cub *cub)
 	line = get_next_line(fd);
 	while (line)
 	{
-		remove_newline(line);
-		if (!dimensions(line, &map, &height, cub))
-		{
-			free(line);
-			free_matrix(map);
+		printf("Leyendo línea del archivo: %s", line);
+		if (!process_line(&line, &map, &height, cub))
 			return (NULL);
-		}
 		line = get_next_line(fd);
 	}
 	cub->height = height;

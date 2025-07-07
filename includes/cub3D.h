@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 19:47:05 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/07/04 15:54:21 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/07/07 16:25:31 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,11 @@ typedef struct s_textures
 	void		*south;
 	void		*east;
 	void		*west;
+
+	int		ceiling_rgb[3];
+	int		floor_rgb[3];
+	int		ceiling_set;
+	int		floor_set;
 }				t_textures;
 
 typedef struct s_cub
@@ -89,9 +94,6 @@ int				check_top_bottom_walls(t_cub *game);
 int				check_side_walls(t_cub *game);
 //....dimensions.c....//
 int				dimensions(char *line, char ***map, int *height, t_cub *cub);
-//....error.c....//
-int				ft_error(int i);
-int 			ft_error_mlx(int i);
 //....flood_fill.c....//
 void			flood_fill(t_cub *game, int x, int y, char **map_copy);
 char			**copy_map(char **map, int height);
@@ -99,13 +101,21 @@ void			free_matrix(char **matrix);
 int				check_closed_map(t_cub *game);
 //....load_map.c....//
 char			**load_map(const char *file, t_cub *cub);
-//....parse.c....//
+//....normalize_map.c....//
 int				normalize_map(t_cub *game);
+//....textures_color.c....//
+int				parse_color_line(char *line, t_cub *game);
+
+void	parse_texture_line(char *line, t_cub *cub);
+
 //....utils_parse.c....//
 int				is_valid_map_char(char c);
 int				is_player(char c);
 //....validate_map.c....//
 int				validate_map(t_cub *game);
+//....error.c....//
+int				ft_error(int i);
+int 			ft_error_mlx(int i);
 
 int	load_textures(t_cub *cub);
 int     cub3d(t_cub *cub);

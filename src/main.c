@@ -6,11 +6,23 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 19:17:33 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/07/04 16:31:11 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/07/07 20:40:38 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
+void	init_texture_paths(t_cub *cub)
+{
+	int	i;
+
+	i = 0;
+	while (i < NUM_TEXTURES)
+	{
+		cub->textures_path[i] = NULL;
+		i++;
+	}
+}
 
 void	init_struct(t_cub *cub)
 {
@@ -20,6 +32,38 @@ void	init_struct(t_cub *cub)
 	if (!cub->textures || !cub->mlx)
 		exit(ft_error(9));
 }
+
+void	cleanup(t_cub *cub)
+{
+	int i;
+	
+	i = 0;
+	while (i < NUM_TEXTURES) // Cambia 5 por el número de texturas que tengas
+	{
+		if (cub->textures_path[i])
+		{
+			free(cub->textures_path[i]);
+			cub->textures_path[i] = NULL;
+		}
+		i++;
+	}
+	if (cub->textures)
+	{
+		free(cub->textures);
+		cub->textures = NULL;
+	}
+	if (cub->mlx)
+	{
+		free(cub->mlx);
+		cub->mlx = NULL;
+	}
+	if (cub->map)
+	{
+		free_matrix(cub->map);
+		cub->map = NULL;
+	}
+}
+
 
 int	main(int argc, char **argv)
 {
@@ -37,6 +81,7 @@ int	main(int argc, char **argv)
 	if (!cub.map)
 	{
 		ft_putstr_fd("Error: No se pudo cargar el mapa.\n", 2);
+		cleanup(&cub);
 		return (EXIT_FAILURE);
 	}
 
@@ -44,11 +89,11 @@ int	main(int argc, char **argv)
 	if (!validate_map(&cub))
 	{
 		ft_putstr_fd("Mapa inválido.\n", 2);
-		free_matrix(cub.map);
+		cleanup(&cub);
 		return (EXIT_FAILURE);
 	}
 
 	ft_putstr_fd("Mapa válido.\n", 1);
-	free_matrix(cub.map);
+	cleanup(&cub);	
 	return (EXIT_SUCCESS);
 }

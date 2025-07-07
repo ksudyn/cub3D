@@ -6,7 +6,7 @@
 #    By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/25 20:00:22 by ksudyn            #+#    #+#              #
-#    Updated: 2025/07/04 15:55:18 by ksudyn           ###   ########.fr        #
+#    Updated: 2025/07/07 16:26:56 by ksudyn           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,8 @@ SRCS =	src/parse/check_map.c\
 		src/parse/flood_fill.c\
 		src/parse/load_map.c\
 		src/parse/normalize_map.c\
+		src/parse/texture_color.c\
+		src/parse/texture_line.c\
 		src/parse/utils_parse.c\
 		src/parse/validate_map.c\
 		src/cub3d.c\
