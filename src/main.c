@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 19:17:33 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/07/07 20:40:38 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/07/08 20:47:08 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ void	init_struct(t_cub *cub)
 
 void	cleanup(t_cub *cub)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
-	while (i < NUM_TEXTURES) // Cambia 5 por el número de texturas que tengas
+	while (i < NUM_TEXTURES)
 	{
 		if (cub->textures_path[i])
 		{
@@ -64,10 +64,9 @@ void	cleanup(t_cub *cub)
 	}
 }
 
-
 int	main(int argc, char **argv)
 {
-	t_cub 	cub;
+	t_cub	cub;
 
 	if (argc != 2)
 	{
@@ -75,7 +74,6 @@ int	main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	}
 	init_struct(&cub);
-
 	// Cargar mapa y altura
 	cub.map = load_map(argv[1], &cub);
 	if (!cub.map)
@@ -84,7 +82,6 @@ int	main(int argc, char **argv)
 		cleanup(&cub);
 		return (EXIT_FAILURE);
 	}
-
 	// Validar mapa
 	if (!validate_map(&cub))
 	{
@@ -92,8 +89,12 @@ int	main(int argc, char **argv)
 		cleanup(&cub);
 		return (EXIT_FAILURE);
 	}
-
+	// if(cub3d(&cub) == 1)
+	// {
+	// 	cleanup(&cub);
+	// 	return(1);
+	// }
 	ft_putstr_fd("Mapa válido.\n", 1);
-	cleanup(&cub);	
+	cleanup(&cub);
 	return (EXIT_SUCCESS);
 }

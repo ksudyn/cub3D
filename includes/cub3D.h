@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 19:47:05 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/07/07 16:25:31 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/07/08 19:56:53 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ typedef struct s_cub
 	t_mlx		*mlx;
 	char	*textures_path[NUM_TEXTURES];
 	t_image		image[NUM_TEXTURES];
+	int		map_started;
+	int		map_finished;
 }				t_cub;
 
 //....check_map.c....//
@@ -117,7 +119,7 @@ int				validate_map(t_cub *game);
 int				ft_error(int i);
 int 			ft_error_mlx(int i);
 
-int	load_textures(t_cub *cub);
+int		load_textures(t_cub *cub);
 int     cub3d(t_cub *cub);
 
 #endif
