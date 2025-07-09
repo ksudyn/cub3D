@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 16:01:22 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/07/08 20:46:58 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/07/09 16:43:33 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int     cub3d(t_cub *cub)
     //No se dibuja directamente en la ventana para evitar parpadeos (double buffering).
     cub->mlx->data = mlx_get_data_addr(cub->mlx->img, &cub->mlx->bpp,
                     &cub->mlx->size_line, &cub->mlx->endian);
+
+
 
     if(load_textures(cub) == 1)
         return(1);

@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 19:47:05 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/07/08 19:56:53 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/07/09 18:22:56 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,18 @@
 
 # define T_NORTH "./textures/north.xpm"
 # define T_SOUTH "./textures/south.xpm"
-# define T_EAST  "./textures/east.xpm"
-# define T_WEST  "./textures/west.xpm"
+# define T_EAST "./textures/east.xpm"
+# define T_WEST "./textures/west.xpm"
 
 # define WIDTH 1280
 # define HEIGHT 1200
 # define CELL_SIZE 64
-#define NORTH 0
-#define SOUTH 1
-#define EAST  2
-#define WEST  3
+# define NORTH 0
+# define SOUTH 1
+# define EAST 2
+# define WEST 3
 
-#define NUM_TEXTURES 4
+# define NUM_TEXTURES 4
 
 # include "../libft/libft.h"
 # include "../minilibx-linux/mlx.h"
@@ -39,14 +39,30 @@
 
 typedef struct s_image
 {
-	void	*img;         // puntero a la imagen MLX
-	char	*data;        // dirección de los píxeles
-	int		width;        // ancho de la imagen
-	int		height;       // alto de la imagen
-	int		bpp;          // bits por píxel
-	int		size_line;    // cantidad de bytes por fila
-	int		endian;       // orden de bytes (endianness)
+	void *img;     // puntero a la imagen MLX
+	char *data;    // dirección de los píxeles
+	int width;     // ancho de la imagen
+	int height;    // alto de la imagen
+	int bpp;       // bits por píxel
+	int size_line; // cantidad de bytes por fila
+	int endian;    // orden de bytes (endianness)
 }				t_image;
+
+typedef struct s_player
+{
+	float		x;
+	float		y;
+	float		angle;
+	float		delta_x;
+	float		delta_y;
+
+	int			key_up;
+	int			key_down;
+	int			key_left;
+	int			key_right;
+	int			left_rotate;
+	int			right_rotate;
+}				t_player;
 
 typedef struct s_mlx
 {
@@ -66,10 +82,10 @@ typedef struct s_textures
 	void		*east;
 	void		*west;
 
-	int		ceiling_rgb[3];
-	int		floor_rgb[3];
-	int		ceiling_set;
-	int		floor_set;
+	int			ceiling_rgb[3];
+	int			floor_rgb[3];
+	int			ceiling_set;
+	int			floor_set;
 }				t_textures;
 
 typedef struct s_cub
@@ -80,13 +96,14 @@ typedef struct s_cub
 	float		player_x;
 	float		player_y;
 	char		player_dir;
+	int			map_started;
+	int			map_finished;
 
 	t_textures	*textures;
 	t_mlx		*mlx;
-	char	*textures_path[NUM_TEXTURES];
+	t_player	player;
+	char		*textures_path[NUM_TEXTURES];
 	t_image		image[NUM_TEXTURES];
-	int		map_started;
-	int		map_finished;
 }				t_cub;
 
 //....check_map.c....//
@@ -108,7 +125,7 @@ int				normalize_map(t_cub *game);
 //....textures_color.c....//
 int				parse_color_line(char *line, t_cub *game);
 
-void	parse_texture_line(char *line, t_cub *cub);
+void			parse_texture_line(char *line, t_cub *cub);
 
 //....utils_parse.c....//
 int				is_valid_map_char(char c);
@@ -117,9 +134,9 @@ int				is_player(char c);
 int				validate_map(t_cub *game);
 //....error.c....//
 int				ft_error(int i);
-int 			ft_error_mlx(int i);
+int				ft_error_mlx(int i);
 
-int		load_textures(t_cub *cub);
-int     cub3d(t_cub *cub);
+int				load_textures(t_cub *cub);
+int				cub3d(t_cub *cub);
 
 #endif
