@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 19:17:33 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/07/09 15:39:01 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/08/13 18:58:56 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,4 +97,5 @@ int	main(int argc, char **argv)
 	ft_putstr_fd("Mapa válido.\n", 1);
 	cleanup(&cub);
 	return (EXIT_SUCCESS);
+	
 }

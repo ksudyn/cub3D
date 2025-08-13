@@ -6,7 +6,7 @@
 #    By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/25 20:00:22 by ksudyn            #+#    #+#              #
-#    Updated: 2025/07/07 16:26:56 by ksudyn           ###   ########.fr        #
+#    Updated: 2025/08/13 18:53:09 by ksudyn           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,10 @@ SRCS =	src/parse/check_map.c\
 		src/load_textures.c\
 		src/main.c\
 		src/error.c\
+		src/raycasting/collision.c\
+		src/raycasting/math_utils.c\
+		src/raycasting/player_move.c\
+		src/raycasting/ray_player.c\
 	
 
 OBJS = $(SRCS:.c=.o)
