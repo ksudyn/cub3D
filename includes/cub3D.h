@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 19:47:05 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/08/13 18:56:41 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/08/14 19:25:58 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,14 +128,6 @@ typedef struct s_collision
 	int		direction; // NORTH/SOUTH/EAST/WEST
 }	t_collision;
 
-int		map_pixel_from_texture(t_image *tex, float tex_off, float v_off);
-t_image	*set_texture(t_cub *cub, int direction);
-t_collision	cast_row_ray_down(t_cub *cub, float dx, float dy);
-t_collision	cast_row_ray_up(t_cub *cub, float dx, float dy);
-t_collision	cast_column_ray_right(t_cub *cub, float dx, float dy);
-t_collision	cast_column_ray_left(t_cub *cub, float dx, float dy);
-void		draw_vertical_section(t_cub *cub, int x, t_collision col, int h);
-void		cast_ray(t_cub *cub, int x, float ray_angle);
 char	get_map_cell(t_cub *cub, int grid_x, int grid_y);
 int	is_walkable_char(char c);
 int	check_collision(t_cub *cub, float world_x, float world_y);
@@ -148,10 +140,13 @@ void	move_backward(t_cub *cub, float speed);
 void	move_left(t_cub *cub, float speed);
 void	move_right(t_cub *cub, float speed);
 void	rotate_player(t_player *p, float angle);
-int	render_frame(t_cub *cub);
-int	key_release(int keycode, t_cub *cub);
-int	key_press(int keycode, t_cub *cub);
+void	set_collision(t_collision *col, float dist, float offset, int dir);
 
+void    cast_row_ray_down(t_cub *cub, float ray_angle, t_collision *hit);
+void    cast_row_ray_up(t_cub *cub, float ray_angle, t_collision *hit);
+void    cast_column_ray_right(t_cub *cub, float ray_angle, t_collision *hit);
+void    cast_column_ray_left(t_cub *cub, float ray_angle, t_collision *hit);
+void    init_collision(t_collision *col);
 
 
 //....check_map.c....//
