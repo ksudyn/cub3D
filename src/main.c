@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 19:17:33 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/08/14 19:25:24 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/08/15 21:15:01 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,13 +89,16 @@ int	main(int argc, char **argv)
 		cleanup(&cub);
 		return (EXIT_FAILURE);
 	}
-	// if(cub3d(&cub) == 1)
-	// {
-	// 	cleanup(&cub);
-	// 	return(1);
-	// }
 	ft_putstr_fd("Mapa válido.\n", 1);
-	cleanup(&cub);
+	// Llamar a cub3d para inicializar todo
+    if (cub3d(&cub) != 0)
+	{
+    	return 1;
+	}
+mlx_loop(cub.mlx->mlx);
+
+	//cleanup(&cub);
+	mlx_loop(cub.mlx->mlx);
 	return (EXIT_SUCCESS);
 	
 }

@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 16:01:22 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/08/14 19:25:06 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/08/15 19:50:25 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ int     cub3d(t_cub *cub)
 
     if(load_textures(cub) == 1)
         return(1);
-    mlx_put_image_to_window(cub->mlx->mlx, cub->mlx->mlx_win,
-            cub->mlx->img, 0, 0);
-    mlx_loop(cub->mlx->mlx);
-    return(0);
+        // Inicializa hooks (teclas, cerrar ventana, loop)
+    init_hooks(cub);
+
+    return 0; // cub3d completó la inicialización
 }
 

@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 19:47:05 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/08/14 19:25:58 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/08/15 21:21:55 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,9 @@
 # define T_EAST "./textures/east.xpm"
 # define T_WEST "./textures/west.xpm"
 
-# define WIDTH 1280
-# define HEIGHT 1200
+# define FOV 60
+# define WIDTH 800
+# define HEIGHT 600
 # define CELL_SIZE 64
 # define NORTH 0
 # define SOUTH 1
@@ -33,12 +34,21 @@
 #endif
 
 # define KEY_ESC 65307
+
+# define KEY_LEFT 65361
+# define KEY_RIGHT 65363
 # define KEY_W 119
 # define KEY_A 97
 # define KEY_S 115
 # define KEY_D 100
-# define KEY_LEFT 65361
-# define KEY_RIGHT 65363
+
+#define ON_KEYDOWN 2      // Evento cuando se presiona una tecla
+#define ON_KEYUP 3        // Evento cuando se suelta una tecla
+#define ON_DESTROY 17     // Evento cuando se cierra la ventana (X button de la ventana)
+
+#define NO_EVENT_MASK 0   // Máscara vacía, sin condiciones especiales
+#define KEY_PRESS_MASK 1L // Máscara para evento de pulsar tecla
+#define KEY_RELEASE_MASK 2L // Máscara para evento de soltar tecla
 
 
 # include "../libft/libft.h"
@@ -50,6 +60,7 @@
 # include <sys/time.h> // gettimeofday
 # include <unistd.h>   // read, write, close
 # include <math.h>
+# include <stdbool.h>
 
 typedef struct s_image
 {
@@ -120,7 +131,6 @@ typedef struct s_cub
 	t_image		image[NUM_TEXTURES];
 }				t_cub;
 
-
 typedef struct s_collision
 {
 	float	dist;    // distancia en UNIDADES DE CELDA
@@ -142,11 +152,15 @@ void	move_right(t_cub *cub, float speed);
 void	rotate_player(t_player *p, float angle);
 void	set_collision(t_collision *col, float dist, float offset, int dir);
 
+void	render_frame(t_cub *cub);
+int	safe_exit(t_cub *cub);
+void	draw_vertical_section(t_cub *cub, int x, t_collision collision);
 void    cast_row_ray_down(t_cub *cub, float ray_angle, t_collision *hit);
 void    cast_row_ray_up(t_cub *cub, float ray_angle, t_collision *hit);
 void    cast_column_ray_right(t_cub *cub, float ray_angle, t_collision *hit);
 void    cast_column_ray_left(t_cub *cub, float ray_angle, t_collision *hit);
 void    init_collision(t_collision *col);
+void	init_hooks(t_cub *cub);
 
 
 //....check_map.c....//
