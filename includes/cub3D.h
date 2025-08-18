@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 19:47:05 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/08/15 21:21:55 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/08/18 20:37:31 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # define T_EAST "./textures/east.xpm"
 # define T_WEST "./textures/west.xpm"
 
-# define FOV 60
+# define FOV (60 * M_PI / 180.0) // 60 grados = 1.047 rad
 # define WIDTH 800
 # define HEIGHT 600
 # define CELL_SIZE 64
@@ -144,7 +144,6 @@ int	check_collision(t_cub *cub, float world_x, float world_y);
 int	check_collision_radius(t_cub *cub, float x, float y, float r);
 float	deg_to_rad(float deg);
 float	sqr(float n);
-void	put_pixel(t_mlx *mlx, int x, int y, int color);
 void	move_forward(t_cub *cub, float speed);
 void	move_backward(t_cub *cub, float speed);
 void	move_left(t_cub *cub, float speed);
@@ -154,13 +153,14 @@ void	set_collision(t_collision *col, float dist, float offset, int dir);
 
 void	render_frame(t_cub *cub);
 int	safe_exit(t_cub *cub);
-void	draw_vertical_section(t_cub *cub, int x, t_collision collision);
 void    cast_row_ray_down(t_cub *cub, float ray_angle, t_collision *hit);
 void    cast_row_ray_up(t_cub *cub, float ray_angle, t_collision *hit);
 void    cast_column_ray_right(t_cub *cub, float ray_angle, t_collision *hit);
 void    cast_column_ray_left(t_cub *cub, float ray_angle, t_collision *hit);
+t_collision	cast_ray(t_cub *cub, float ray_angle);
 void    init_collision(t_collision *col);
 void	init_hooks(t_cub *cub);
+int	rgb_to_int(int rgb[3]);
 
 
 //....check_map.c....//

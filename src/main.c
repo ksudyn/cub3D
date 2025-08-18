@@ -6,11 +6,25 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 19:17:33 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/08/15 21:15:01 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/08/18 18:56:22 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
+void	init_player(t_cub *cub)
+{
+	cub->player.x = cub->player_x * CELL_SIZE + CELL_SIZE / 2;
+    cub->player.y = cub->player_y * CELL_SIZE + CELL_SIZE / 2;
+	cub->player.angle = 0;// o según tu dirección inicial
+	cub->player.key_up = 0;
+	cub->player.key_down = 0;
+	cub->player.key_left = 0;
+	cub->player.key_right = 0;
+	cub->player.left_rotate = 0;
+	cub->player.right_rotate = 0;
+}
+
 
 void	init_texture_paths(t_cub *cub)
 {
@@ -64,41 +78,36 @@ void	cleanup(t_cub *cub)
 	}
 }
 
-int	main(int argc, char **argv)
+int main(int argc, char **argv)
 {
-	t_cub	cub;
+    t_cub cub;
 
-	if (argc != 2)
-	{
-		ft_error(10);
-		return (EXIT_FAILURE);
-	}
-	init_struct(&cub);
-	// Cargar mapa y altura
-	cub.map = load_map(argv[1], &cub);
-	if (!cub.map)
-	{
-		ft_putstr_fd("Error: No se pudo cargar el mapa.\n", 2);
-		cleanup(&cub);
-		return (EXIT_FAILURE);
-	}
-	// Validar mapa
-	if (!validate_map(&cub))
-	{
-		ft_putstr_fd("Mapa inválido.\n", 2);
-		cleanup(&cub);
-		return (EXIT_FAILURE);
-	}
-	ft_putstr_fd("Mapa válido.\n", 1);
-	// Llamar a cub3d para inicializar todo
+    if (argc != 2)
+        return (ft_error(10), EXIT_FAILURE);
+
+    init_struct(&cub);               // mallocs y bzero
+    init_texture_paths(&cub);        // inicializa paths a NULL
+
+    // Cargar mapa y validar
+    cub.map = load_map(argv[1], &cub);
+    if (!cub.map)
+        return (ft_putstr_fd("Error: No se pudo cargar el mapa.\n", 2), cleanup(&cub), EXIT_FAILURE);
+
+    if (!validate_map(&cub))
+        return (ft_putstr_fd("Mapa inválido.\n", 2), cleanup(&cub), EXIT_FAILURE);
+
+    ft_putstr_fd("Mapa válido.\n", 1);
+    // Inicializar jugador
+    init_player(&cub);
+
+    // Inicializar MLX, ventana, imagen, cargar texturas y hooks
     if (cub3d(&cub) != 0)
-	{
-    	return 1;
-	}
-mlx_loop(cub.mlx->mlx);
+        return cleanup(&cub), EXIT_FAILURE;
 
-	//cleanup(&cub);
-	mlx_loop(cub.mlx->mlx);
-	return (EXIT_SUCCESS);
-	
+    // Lanzar loop principal
+    mlx_loop(cub.mlx->mlx);
+
+    // Limpieza (opcional, nunca se llega a esta línea normalmente)
+    cleanup(&cub);
+    return EXIT_SUCCESS;
 }

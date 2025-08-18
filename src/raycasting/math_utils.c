@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 18:00:06 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/08/15 19:38:07 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/08/18 18:13:11 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,6 @@ float	deg_to_rad(float deg)
 float	sqr(float n)
 {
 	return (n * n);
-}
-// sqr: Devuelve el cuadrado de un número, usado para calcular distancias.
-
-void	put_pixel(t_mlx *mlx, int x, int y, int color)
-{
-	char	*dst;
-
-	if (x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT)
-		return ;
-	dst = mlx->data + (y * mlx->size_line + x * (mlx->bpp / 8));
-	*(unsigned int *)dst = color;
 }
 // Dibuja un píxel en la pantalla en (x, y) con un color dado.
 // Comprueba límites para no escribir fuera de la memoria de la imagen.
@@ -56,4 +45,12 @@ int	safe_exit(t_cub *cub)
 		free(cub->mlx->mlx);
 	}
 	exit(0);
+}
+
+int	rgb_to_int(int rgb[3])
+{
+	int color;
+
+	color = (rgb[0] << 16) | (rgb[1] << 8) | rgb[2];
+	return (color);
 }

@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 17:30:36 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/08/14 19:11:03 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/08/18 15:27:56 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ void	init_collision(t_collision *col)
 
 t_collision	cast_ray(t_cub *cub, float ray_angle)
 {
-	t_collision	hit_h;
-	t_collision	hit_v;
-	t_collision	final;
+	t_collision hit_h;
+	t_collision hit_v;
+	t_collision final;
 
 	init_collision(&hit_h);
 	init_collision(&hit_v);

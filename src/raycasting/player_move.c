@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 18:08:16 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/08/13 20:26:52 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/08/18 15:25:15 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	move_backward(t_cub *cub, float speed)
 	float	r;
 
 	r = 6.0f;
+	//Estás usando un radio r = 6.0f para evitar que el jugador atraviese paredes
+	//y el cálculo de celdas está correcto.
 	new_x = cub->player.x - cub->player.delta_x * speed;
 	new_y = cub->player.y - cub->player.delta_y * speed;
 	if (!check_collision_radius(cub, new_x, new_y, r))

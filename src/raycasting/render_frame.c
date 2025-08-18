@@ -6,93 +6,85 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 19:37:36 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/08/15 21:21:46 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/08/18 20:42:58 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-t_collision	cast_ray_grid(t_cub *cub, float ray_dx, float ray_dy)
+void	put_pixel(t_cub *cub, int x, int y, int color)
 {
-	t_collision	col;
-	float	x;
-	float	y;
-	float	step = 0.05f; // tamaño del paso
+	char	*pixel;
 
-	x = cub->player.x;
-	y = cub->player.y;
-
-	col.dist = 0;
-	while (1)
-	{
-		if (check_collision(cub, x, y)) // tu función de colisión con muro
-			break ;
-		x += ray_dx * step;
-		y += ray_dy * step;
-		col.dist += step;
-	}
-	col.offset = (ray_dx != 0) ? fmod(y, CELL_SIZE) / CELL_SIZE
-		: fmod(x, CELL_SIZE) / CELL_SIZE;
-	col.direction = (ray_dx > 0) ? EAST : WEST; // simplificado
-	return (col);
+	if (x < 0 || y < 0 || x >= WIDTH || y >= HEIGHT)
+		return ;
+	pixel = cub->mlx->data;
+	pixel += y * cub->mlx->size_line;
+	pixel += x * (cub->mlx->bpp / 8);
+	*(unsigned int *)pixel = color;
 }
 
-t_image *select_texture(t_cub *cub, int direction)
+t_image	set_texture(t_cub *cub, int direction)
 {
+	t_image	texture;
+
 	if (direction == NORTH)
-		return &cub->image[0];
-	if (direction == SOUTH)
-		return &cub->image[1];
-	if (direction == EAST)
-		return &cub->image[2];
-	return &cub->image[3]; // WEST
-}
-
-void	draw_column_rec(t_cub *cub, int x, int y, int start_y, int section_height, t_image *tex, int texture_x)
-{
-	int	color;
-	int	texture_y;
-
-	if (y >= HEIGHT)
-		return;
-
-	if (y < start_y)
-		put_pixel(cub->mlx, x, y, cub->textures->ceiling_rgb); // techo
-	else if (y < start_y + section_height)
-	{
-		texture_y = ((y - start_y) * tex->height) / section_height;
-		color = get_texture_pixel(tex, texture_x, texture_y);
-		put_pixel(cub->mlx, x, y, color);
-	}
+		texture = cub->image[NORTH];
+	else if (direction == SOUTH)
+		texture = cub->image[SOUTH];
+	else if (direction == EAST)
+		texture = cub->image[EAST];
 	else
-		put_pixel(cub->mlx, x, y, cub->textures->floor_rgb); // suelo
-
-	draw_column_rec(cub, x, y + 1, start_y, section_height, tex, texture_x);
+		texture = cub->image[WEST];
+	return (texture);
 }
 
-void	draw_vertical_section(t_cub *cub, int x, t_collision collision)
+int	map_pixel_from_texture(t_image texture, t_collision col, float v_offset)
 {
-	int	section_height;
-	int	start_y;
-	t_image *tex;
-    int texture_x;
+	int	x;
+	int	y;
+	int	color;
 
-	if (collision.dist == 0)
-		collision.dist = 0.1f;
+	x = texture.width * col.offset;
+	y = texture.height * v_offset;
+	
+	if (x < 0) x = 0;
+	if (x >= texture.width) x = texture.width - 1;
+	if (y < 0) y = 0;
+	if (y >= texture.height) y = texture.height - 1;
 
-	section_height = (CELL_SIZE * HEIGHT) / collision.dist;
-	start_y = (HEIGHT - section_height) / 2;
-	if (start_y < 0)
-		start_y = 0;
-
-	tex = select_texture(cub, collision.direction);
-
-    // Coordenada X de la textura según dónde golpeó el muro
-	texture_x = (int)(collision.offset * tex->width);
-
-	draw_column_rec(cub, x, 0, HEIGHT, tex, start_y, section_height);
+	color = *(unsigned int *)(texture.data + y * texture.size_line
+			+ x * (texture.bpp / 8));
+	return (color);
 }
 
+void	draw_vertical_section(t_cub *cub, int x, t_collision coll)
+{
+		int		i;
+	int		section_size;
+	int		start_height;
+	t_image	texture;
+
+	if (coll.direction == NORTH || coll.direction == EAST)
+		coll.offset = 1 - coll.offset;
+	texture = set_texture(cub, coll.direction);
+	if (coll.dist == 0)
+		coll.dist = 0.1;
+	section_size = HEIGHT * 2 / coll.dist;
+	start_height = (HEIGHT - section_size) / 2;
+	i = 0;
+	while (i < HEIGHT)
+	{
+		if (i < start_height)
+			put_pixel(cub, x, i, rgb_to_int(cub->textures->ceiling_rgb));
+		else if (i < start_height + section_size)
+			put_pixel(cub, x, i, map_pixel_from_texture(texture, coll,
+					(float)(i - start_height) / section_size));
+		else
+			put_pixel(cub, x, i, rgb_to_int(cub->textures->floor_rgb));
+		i++;
+	}
+}
 
 void	render_frame(t_cub *cub)
 {
@@ -100,19 +92,20 @@ void	render_frame(t_cub *cub)
 	float		ray_angle;
 	float		fov_step;
 	t_collision	col;
-	float		ray_dx;
-	float		ray_dy;
 
 	x = 0;
-	fov_step = (float)FOV / WIDTH;
+	fov_step = FOV / WIDTH;
 	while (x < WIDTH)
 	{
-		ray_angle = cub->player.angle - (FOV / 2) + (fov_step * x);
-		ray_dx = cos(ray_angle);
-		ray_dy = sin(ray_angle);
-		col = cast_ray_grid(cub, ray_dx, ray_dy);
-		col.dist *= cos(ray_angle - cub->player.angle);// fisheye
+		ray_angle = cub->player.angle - (FOV / 2.0) + (fov_step * x);
+		col = cast_ray(cub, ray_angle);
+
+		// corrección de fisheye
+		col.dist *= cos(ray_angle - cub->player.angle);
+
 		draw_vertical_section(cub, x, col);
 		x++;
 	}
+	mlx_put_image_to_window(cub->mlx->mlx, cub->mlx->mlx_win,
+		cub->mlx->img, 0, 0);
 }
