@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 16:48:58 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/08/15 20:53:24 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/08/19 20:00:34 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,10 @@ int	key_release_hook(int keycode, t_cub *cub)
 int	main_loop(t_cub *cub)
 {
 	float	speed = 2.0f;
-	float	rot_speed = 0.05f;
+	float	rot_speed;
+	//esto es la velocidad de rotacion por frame.
+	//Cuanto mas alto mas rapido rotará.
+	rot_speed = 2.0f;
 
 	if (cub->player.left_rotate)
 		rotate_player(&cub->player, -rot_speed);
@@ -60,7 +63,7 @@ int	main_loop(t_cub *cub)
 	if (cub->player.key_up)
 		move_forward(cub, speed);
 	if (cub->player.key_down)
-		move_forward(cub, -speed);
+		move_backward(cub, speed);
 	if (cub->player.key_left)
 		move_left(cub, speed);
 	if (cub->player.key_right)

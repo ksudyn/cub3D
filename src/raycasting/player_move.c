@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 18:08:16 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/08/18 15:25:15 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/08/20 19:35:44 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,9 @@ void	move_left(t_cub *cub, float speed)
 	float	r;
 
 	r = 6.0f;
-	new_x = cub->player.x - cub->player.delta_y * speed;
-	new_y = cub->player.y + cub->player.delta_x * speed;
+	
+	new_x = cub->player.x + cub->player.delta_y * speed;
+	new_y = cub->player.y - cub->player.delta_x * speed;
 	if (!check_collision_radius(cub, new_x, new_y, r))
 	{
 		cub->player.x = new_x;
@@ -69,8 +70,9 @@ void	move_right(t_cub *cub, float speed)
 	float	r;
 
 	r = 6.0f;
-	new_x = cub->player.x + cub->player.delta_y * speed;
-	new_y = cub->player.y - cub->player.delta_x * speed;
+
+	new_x = cub->player.x - cub->player.delta_y * speed;
+	new_y = cub->player.y + cub->player.delta_x * speed;
 	if (!check_collision_radius(cub, new_x, new_y, r))
 	{
 		cub->player.x = new_x;
@@ -84,15 +86,13 @@ void	move_right(t_cub *cub, float speed)
 // move_left y move_right intercambian dx y dy para hacer el “strafe” (desplazamiento lateral).
 // r = 6.0f es el radio de colisión.
 
-void	rotate_player(t_player *p, float angle)
+void	rotate_player(t_player *player, float angle)
 {
-	p->angle += angle;
-	if (p->angle < 0)
-		p->angle += 2 * M_PI;
-	else if (p->angle >= 2 * M_PI)
-		p->angle -= 2 * M_PI;
-	p->delta_x = cos(p->angle);
-	p->delta_y = sin(p->angle);
+	player->angle += angle;
+	player->delta_x = cos(deg_to_rad(player->angle));
+	player->delta_y = sin(deg_to_rad(player->angle));
+	//Esto significa que delta_x y delta_y
+	//representan la dirección hacia donde mira el jugador.
 }
 
 // Rota al jugador cambiando su ángulo.

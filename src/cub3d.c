@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 16:01:22 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/08/18 20:30:47 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/08/19 17:28:03 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int     cub3d(t_cub *cub)
 
     if (!cub->mlx->data)
         return ft_error_mlx(1);
-    printf("MLX initialized: img=%p, data=%p\n", cub->mlx->img, cub->mlx->data);
 
     if(load_textures(cub) == 1)
         return(1);

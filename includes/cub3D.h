@@ -6,19 +6,14 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 19:47:05 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/08/18 20:37:31 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/08/20 18:48:31 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# define T_NORTH "./textures/north.xpm"
-# define T_SOUTH "./textures/south.xpm"
-# define T_EAST "./textures/east.xpm"
-# define T_WEST "./textures/west.xpm"
-
-# define FOV (60 * M_PI / 180.0) // 60 grados = 1.047 rad
+# define FOV 60
 # define WIDTH 800
 # define HEIGHT 600
 # define CELL_SIZE 64

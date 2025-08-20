@@ -6,23 +6,36 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 19:17:33 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/08/18 18:56:22 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/08/20 18:22:11 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	init_player(t_cub *cub)
+void init_player(t_cub *cub)
 {
-	cub->player.x = cub->player_x * CELL_SIZE + CELL_SIZE / 2;
+    cub->player.x = cub->player_x * CELL_SIZE + CELL_SIZE / 2;
     cub->player.y = cub->player_y * CELL_SIZE + CELL_SIZE / 2;
-	cub->player.angle = 0;// o según tu dirección inicial
-	cub->player.key_up = 0;
-	cub->player.key_down = 0;
-	cub->player.key_left = 0;
-	cub->player.key_right = 0;
-	cub->player.left_rotate = 0;
-	cub->player.right_rotate = 0;
+
+    // Inicializar ángulo según dirección
+    if (cub->player_dir == 'N')
+        cub->player.angle = 270; // hacia arriba
+    else if (cub->player_dir == 'S')
+        cub->player.angle = 90;  // hacia abajo
+    else if (cub->player_dir == 'E')
+        cub->player.angle = 0;   // hacia derecha
+    else if (cub->player_dir == 'W')
+        cub->player.angle = 180; // hacia izquierda
+
+    cub->player.key_up = 0;
+    cub->player.key_down = 0;
+    cub->player.key_left = 0;
+    cub->player.key_right = 0;
+    cub->player.left_rotate = 0;
+    cub->player.right_rotate = 0;
+
+    cub->player.delta_x = cos(deg_to_rad(cub->player.angle));
+    cub->player.delta_y = sin(deg_to_rad(cub->player.angle)); 
 }
 
 

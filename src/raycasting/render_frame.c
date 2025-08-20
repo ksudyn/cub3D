@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 19:37:36 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/08/18 20:42:58 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/08/20 20:44:31 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,14 @@ t_image	set_texture(t_cub *cub, int direction)
 	else
 		texture = cub->image[WEST];
 	return (texture);
+	
 }
 
 int	map_pixel_from_texture(t_image texture, t_collision col, float v_offset)
 {
 	int	x;
 	int	y;
-	int	color;
+	int	color;	
 
 	x = texture.width * col.offset;
 	y = texture.height * v_offset;
@@ -65,13 +66,14 @@ void	draw_vertical_section(t_cub *cub, int x, t_collision coll)
 	int		start_height;
 	t_image	texture;
 
-	if (coll.direction == NORTH || coll.direction == EAST)
+	if (coll.direction == SOUTH || coll.direction == NORTH)
 		coll.offset = 1 - coll.offset;
 	texture = set_texture(cub, coll.direction);
 	if (coll.dist == 0)
 		coll.dist = 0.1;
-	section_size = HEIGHT * 2 / coll.dist;
+	section_size = (HEIGHT * CELL_SIZE) / coll.dist;
 	start_height = (HEIGHT - section_size) / 2;
+
 	i = 0;
 	while (i < HEIGHT)
 	{
@@ -92,16 +94,18 @@ void	render_frame(t_cub *cub)
 	float		ray_angle;
 	float		fov_step;
 	t_collision	col;
+	float fov_rad;
 
 	x = 0;
-	fov_step = FOV / WIDTH;
+	fov_rad = deg_to_rad(FOV);
+	fov_step = fov_rad / WIDTH;
 	while (x < WIDTH)
 	{
-		ray_angle = cub->player.angle - (FOV / 2.0) + (fov_step * x);
+		ray_angle = deg_to_rad(cub->player.angle) - (fov_rad / 2.0) + (fov_step * x);
 		col = cast_ray(cub, ray_angle);
 
 		// corrección de fisheye
-		col.dist *= cos(ray_angle - cub->player.angle);
+		col.dist *= cos(ray_angle - deg_to_rad(cub->player.angle));
 
 		draw_vertical_section(cub, x, col);
 		x++;
