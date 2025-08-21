@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 18:01:12 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/08/13 20:19:19 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/08/21 18:53:25 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ int	check_collision(t_cub *cub, float world_x, float world_y)
 		return (0);
 	return (1);
 }
-//Convierte coordenadas del mundo (world_x, world_y) a coordenadas de celda (grid_x, grid_y).
-//Esta función verifica si un punto (x, y) choca con un muro o está fuera del mapa.
-//Devuelve true si hay colisión y false si se puede mover libremente.
+// Convierte coordenadas del mundo (world_x,world_y) a coordenadas de celda (grid_x, grid_y).
+// Esta función verifica si un punto (x,y) choca con un muro o está fuera del mapa.
+// Devuelve true si hay colisión y false si se puede mover libremente.
 
 int	check_collision_radius(t_cub *cub, float x, float y, float r)
 {

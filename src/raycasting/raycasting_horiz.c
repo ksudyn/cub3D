@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 17:11:22 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/08/20 20:28:37 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/08/21 19:40:38 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,15 @@ void	set_collision(t_collision *col, float dist, float offset, int dir)
 	col->offset = offset;
 	col->direction = dir;
 }
-//set_collision: Guarda en t_collision la distancia al impacto,
-//el desplazamiento dentro del bloque (para texturas) y la dirección de la pared golpeada.
+// set_collision: Guarda en t_collision la distancia al impacto,
+// el desplazamiento dentro del bloque (para texturas) y la dirección de la pared golpeada.
 
 void	cast_row_ray_down(t_cub *cub, float angle, t_collision *hit)
 {
 	float	x;
-    float y;
-    float x_step;
-    float y_step;
+	float	y;
+	float	x_step;
+	float	y_step;
 
 	y = floor(cub->player.y / CELL_SIZE) * CELL_SIZE + CELL_SIZE;
 	x = cub->player.x + (y - cub->player.y) / tan(angle);
@@ -47,9 +47,9 @@ void	cast_row_ray_down(t_cub *cub, float angle, t_collision *hit)
 	{
 		if (check_collision(cub, x, y))
 		{
-			set_collision(hit, sqrt(sqr(x - cub->player.x)
-					+ sqr(y - cub->player.y)),
-					fmod(x, CELL_SIZE) / CELL_SIZE, SOUTH);
+			set_collision(hit, sqrt(sqr(x - cub->player.x) + sqr(y
+						- cub->player.y)), fmod(x, CELL_SIZE) / CELL_SIZE,
+				SOUTH);
 			return ;
 		}
 		x += x_step;
@@ -64,25 +64,28 @@ void	cast_row_ray_down(t_cub *cub, float angle, t_collision *hit)
 
 void	cast_row_ray_up(t_cub *cub, float angle, t_collision *hit)
 {
-	float	x, y, x_step, y_step;
+	float	x;
+	float	y;
+	float	x_step;
+	float 	y_step;
 
 	y = floor(cub->player.y / CELL_SIZE) * CELL_SIZE - 0.0001f;
 	x = cub->player.x + (y - cub->player.y) / tan(angle);
 	y_step = -CELL_SIZE;
-	x_step = CELL_SIZE / tan(angle);
+	x_step = -CELL_SIZE / tan(angle);
 	while (1)
 	{
 		if (check_collision(cub, x, y))
 		{
-			set_collision(hit, sqrt(sqr(x - cub->player.x)
-					+ sqr(y - cub->player.y)),
-					fmod(x, CELL_SIZE) / CELL_SIZE, NORTH);
+			set_collision(hit, sqrt(sqr(x - cub->player.x) + sqr(y
+						- cub->player.y)), fmod(x, CELL_SIZE) / CELL_SIZE,
+				NORTH);
 			return ;
 		}
 		x += x_step;
 		y += y_step;
 	}
 }
-//cast_row_ray_up: Igual que la anterior,
-//pero buscando hacia arriba y restando un poco (-0.0001f)
-//para evitar colisiones dobles en el mismo bloque.
+// cast_row_ray_up: Igual que la anterior,
+// pero buscando hacia arriba y restando un poco (-0.0001f)
+// para evitar colisiones dobles en el mismo bloque.

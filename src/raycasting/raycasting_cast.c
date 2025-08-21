@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 17:30:36 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/08/20 20:21:24 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/08/21 19:39:33 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,19 @@
 
 void	init_collision(t_collision *col)
 {
-	col->dist = 1e30;//Sirve como “infinito”,
-			//cualquier colisión real será más cercana y reemplazará este valor
-	col->offset = 0;//Inicialización segura:
-			//aún no hay impacto, así que el offset no importa.
-	col->direction = -1;//Significa “sin dirección todavía”;
-			//cualquier dirección válida (NORTE, SUR, ESTE, OESTE) sobrescribirá esto
+	col->dist = 1e30; // Sirve como “infinito”,
+			// cualquier colisión real será más cercana y reemplazará este valor
+	col->offset = 0; // Inicialización segura:
+			// aún no hay impacto, así que el offset no importa.
+	col->direction = -1; // Significa “sin dirección todavía”;
+			// cualquier dirección válida (NORTE, SUR, ESTE, OESTE) sobrescribirá esto
 }
 
 t_collision	cast_ray(t_cub *cub, float ray_angle)
 {
-	t_collision hit_h;
-	t_collision hit_v;
-	t_collision final;
+	t_collision	hit_h;
+	t_collision	hit_v;
+	t_collision	final;
 
 	init_collision(&hit_h);
 	init_collision(&hit_v);

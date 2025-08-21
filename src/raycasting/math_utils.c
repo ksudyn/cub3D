@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 18:00:06 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/08/18 18:13:11 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/08/21 18:53:41 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ float	deg_to_rad(float deg)
 {
 	return (deg * M_PI / 180);
 }
-// deg_to_rad: Convierte grados a radianes, necesario porque sin y cos en C usan radianes.
+// deg_to_rad: Convierte grados a radianes,
+// necesario porque sin y cos en C usan radianes.
 
 float	sqr(float n)
 {
@@ -49,7 +50,7 @@ int	safe_exit(t_cub *cub)
 
 int	rgb_to_int(int rgb[3])
 {
-	int color;
+	int	color;
 
 	color = (rgb[0] << 16) | (rgb[1] << 8) | rgb[2];
 	return (color);

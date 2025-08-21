@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 16:48:58 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/08/19 20:00:34 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/08/21 18:54:40 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,13 @@ int	key_release_hook(int keycode, t_cub *cub)
 
 int	main_loop(t_cub *cub)
 {
-	float	speed = 2.0f;
+	float	speed;
 	float	rot_speed;
-	//esto es la velocidad de rotacion por frame.
-	//Cuanto mas alto mas rapido rotará.
-	rot_speed = 2.0f;
 
+	speed = 2.0f;
+	// esto es la velocidad de rotacion por frame.
+	// Cuanto mas alto mas rapido rotará.
+	rot_speed = 2.0f;
 	if (cub->player.left_rotate)
 		rotate_player(&cub->player, -rot_speed);
 	if (cub->player.right_rotate)
@@ -68,15 +69,16 @@ int	main_loop(t_cub *cub)
 		move_left(cub, speed);
 	if (cub->player.key_right)
 		move_right(cub, speed);
-
-    render_frame(cub);
+	render_frame(cub);
 	return (0);
 }
 
 void	init_hooks(t_cub *cub)
 {
 	mlx_hook(cub->mlx->mlx_win, ON_DESTROY, NO_EVENT_MASK, safe_exit, cub);
-	mlx_hook(cub->mlx->mlx_win, ON_KEYDOWN, KEY_PRESS_MASK, key_press_hook, cub);
-	mlx_hook(cub->mlx->mlx_win, ON_KEYUP, KEY_RELEASE_MASK, key_release_hook, cub);
+	mlx_hook(cub->mlx->mlx_win, ON_KEYDOWN, KEY_PRESS_MASK, key_press_hook,
+		cub);
+	mlx_hook(cub->mlx->mlx_win, ON_KEYUP, KEY_RELEASE_MASK, key_release_hook,
+		cub);
 	mlx_loop_hook(cub->mlx->mlx, main_loop, cub);
 }

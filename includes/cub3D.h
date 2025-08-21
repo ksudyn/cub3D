@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 19:47:05 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/08/20 18:48:31 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/08/21 19:11:45 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,7 @@ void    cast_row_ray_up(t_cub *cub, float ray_angle, t_collision *hit);
 void    cast_column_ray_right(t_cub *cub, float ray_angle, t_collision *hit);
 void    cast_column_ray_left(t_cub *cub, float ray_angle, t_collision *hit);
 t_collision	cast_ray(t_cub *cub, float ray_angle);
+
 void    init_collision(t_collision *col);
 void	init_hooks(t_cub *cub);
 int	rgb_to_int(int rgb[3]);
@@ -190,5 +191,9 @@ int				ft_error_mlx(int i);
 
 int				load_textures(t_cub *cub);
 int				cub3d(t_cub *cub);
+//....init.c....//
+void init_player(t_cub *cub);
+void	init_texture_paths(t_cub *cub);
+void	init_struct(t_cub *cub);
 
 #endif

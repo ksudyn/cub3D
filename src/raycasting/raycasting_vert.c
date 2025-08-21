@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 17:15:01 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/08/20 20:21:12 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/08/21 19:40:20 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 
 void	cast_column_ray_right(t_cub *cub, float angle, t_collision *hit)
 {
-	float	x, y, x_step, y_step;
+	float	x;
+	float	y;
+	float	x_step;
+	float 	y_step;
 
 	x = floor(cub->player.x / CELL_SIZE) * CELL_SIZE + CELL_SIZE;
 	y = cub->player.y + (x - cub->player.x) * tan(angle);
@@ -41,19 +44,22 @@ void	cast_column_ray_right(t_cub *cub, float angle, t_collision *hit)
 
 void	cast_column_ray_left(t_cub *cub, float angle, t_collision *hit)
 {
-	float	x, y, x_step, y_step;
+	float	x;
+	float	y;
+	float	x_step;
+	float 	y_step;
 
 	x = floor(cub->player.x / CELL_SIZE) * CELL_SIZE - 0.0001f;
 	y = cub->player.y + (x - cub->player.x) * tan(angle);
 	x_step = -CELL_SIZE;
-	y_step = CELL_SIZE * tan(angle);
+	y_step = -CELL_SIZE * tan(angle);
 	while (1)
 	{
 		if (check_collision(cub, x, y))
 		{
 			set_collision(hit, sqrt(sqr(x - cub->player.x)
-					+ sqr(y - cub->player.y)),
-					fmod(y, CELL_SIZE) / CELL_SIZE, WEST);
+				+ sqr(y - cub->player.y)),
+				fmod(y, CELL_SIZE) / CELL_SIZE, WEST);
 			return ;
 		}
 		x += x_step;
