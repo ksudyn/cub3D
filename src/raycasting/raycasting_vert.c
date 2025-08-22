@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 17:15:01 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/08/21 19:40:20 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/08/22 19:58:20 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,3 +68,12 @@ void	cast_column_ray_left(t_cub *cub, float angle, t_collision *hit)
 }
 //cast_column_ray_left: Igual pero hacia la izquierda,
 //usando -CELL_SIZE y un pequeño -0.0001f para no chocar dos veces en el mismo bloque
+//Se resta 0.0001f en x
+//para evitar colisiones dobles cuando el rayo cae justo en una línea de celdas.
+
+// Parte Vertical (EAST/WEST)
+// Cuando el rayo va al EAST (derecha) → cada paso en x es +CELL_SIZE.
+// Cuando el rayo va al WEST (izquierda) → cada paso en x es -CELL_SIZE.
+// En el código:
+// cast_column_ray_right → x_step = +CELL_SIZE
+// cast_column_ray_left → x_step = -CELL_SIZE

@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 19:37:36 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/08/21 19:35:19 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/08/22 20:09:15 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@ void	put_pixel(t_cub *cub, int x, int y, int color)
 	pixel += x * (cub->mlx->bpp / 8);
 	*(unsigned int *)pixel = color;
 }
+//Coloca un pixel de color en la posición (x, y) de la imagen.
+//Calcula en memoria dónde está ese pixel:
+//size_line -> cuántos bytes ocupa una fila de la imagen.
+//bpp / 8 -> cuántos bytes ocupa cada pixel (ej: 32 bits = 4 bytes).
+//Protege contra posiciones fuera de rango (x, y fuera de la ventana).
 
 t_image	set_texture(t_cub *cub, int direction)
 {
@@ -38,6 +43,9 @@ t_image	set_texture(t_cub *cub, int direction)
 		texture = cub->image[WEST];
 	return (texture);
 }
+//Devuelve la textura que corresponde según la dirección de la pared golpeada
+//(NORTE, SUR, ESTE, OESTE).
+//Si el rayo impactó en una pared del OESTE, se usará cub->image[WEST] para dibujarla.
 
 int	map_pixel_from_texture(t_image texture, t_collision col, float v_offset)
 {
@@ -59,6 +67,13 @@ int	map_pixel_from_texture(t_image texture, t_collision col, float v_offset)
 			* texture.size_line + x * (texture.bpp / 8));
 	return (color);
 }
+//Convierte un punto del mundo 3D proyectado en un pixel de la textura.
+//col.offset -> desplazamiento horizontal en la textura
+//v_offset -> desplazamiento vertical relativo (0 arriba, 1 abajo del muro proyectado).
+//Multiplica por el tamaño de la textura,
+// obtiene el (x, y) del pixel dentro de la textura.
+//Devuelve el color exacto de ese pixel.
+//Gracias a esto, la pared no se pinta con un solo color, sino con su textura real.
 
 void	draw_vertical_section(t_cub *cub, int x, t_collision coll)
 {
@@ -87,6 +102,15 @@ void	draw_vertical_section(t_cub *cub, int x, t_collision coll)
 		i++;
 	}
 }
+// Dibuja una columna vertical completa en la pantalla (correspondiente a un rayo).
+// Divide la pantalla en 3 partes:
+// Techo (ceiling): desde arriba hasta donde empieza la pared (start_height).
+// Pared: un rectángulo centrado en la pantalla.
+// La altura (section_size) se calcula con la distancia,
+// cuanto más cerca está la pared, más alta se ve.
+// Se rellena pixel a pixel con el color de la textura.
+// Suelo (floor): desde el final de la pared hasta el final de la pantalla.
+//Este es el paso que construye la ilusión 3D columna a columna.
 
 void	render_frame(t_cub *cub)
 {
@@ -111,3 +135,15 @@ void	render_frame(t_cub *cub)
 	mlx_put_image_to_window(cub->mlx->mlx, cub->mlx->mlx_win,
 		cub->mlx->img, 0, 0);
 }
+// Recorre todos los pixeles en el eje X (x = 0 hasta WIDTH).
+// Para cada columna:
+// Calcula el ángulo del rayo (ray_angle) según el campo de visión (FOV).
+// Lanza un rayo (cast_ray) y obtiene dónde golpea la pared.
+// Corrige la distancia con coseno, elimina la distorsión “ojo de pez”.
+// Dibuja la columna (draw_vertical_section).
+// Finalmente, manda la imagen completa a la ventana con mlx_put_image_to_window.
+
+// Esto es el render loop 3D estilo Wolfenstein 3D:
+// Cada columna de la pantalla corresponde a un rayo.
+// La altura de la pared depende de la distancia.
+// Texturas y colores de techo/suelo completan la escena.

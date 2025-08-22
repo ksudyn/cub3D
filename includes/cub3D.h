@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 19:47:05 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/08/21 19:11:45 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/08/22 19:26:22 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@
 
 # define NUM_TEXTURES 4
 
-#ifndef M_PI
-# define M_PI 3.14159265358979323846
-#endif
+# ifndef M_PI
+#  define M_PI 3.14159265358979323846
+# endif
 
 # define KEY_ESC 65307
 
@@ -37,25 +37,25 @@
 # define KEY_S 115
 # define KEY_D 100
 
-#define ON_KEYDOWN 2      // Evento cuando se presiona una tecla
-#define ON_KEYUP 3        // Evento cuando se suelta una tecla
-#define ON_DESTROY 17     // Evento cuando se cierra la ventana (X button de la ventana)
+# define ON_KEYDOWN 2  // Evento cuando se presiona una tecla
+# define ON_KEYUP 3    // Evento cuando se suelta una tecla
+# define ON_DESTROY 17
+	// Evento cuando se cierra la ventana (X button de la ventana)
 
-#define NO_EVENT_MASK 0   // Máscara vacía, sin condiciones especiales
-#define KEY_PRESS_MASK 1L // Máscara para evento de pulsar tecla
-#define KEY_RELEASE_MASK 2L // Máscara para evento de soltar tecla
-
+# define NO_EVENT_MASK 0     // Máscara vacía, sin condiciones especiales
+# define KEY_PRESS_MASK 1L   // Máscara para evento de pulsar tecla
+# define KEY_RELEASE_MASK 2L // Máscara para evento de soltar tecla
 
 # include "../libft/libft.h"
 # include "../minilibx-linux/mlx.h"
-# include <fcntl.h>    // open
+# include <fcntl.h> // open
+# include <math.h>
+# include <stdbool.h>
 # include <stdio.h>    // printf, perror
 # include <stdlib.h>   // malloc, free, exit
 # include <string.h>   // strerror
 # include <sys/time.h> // gettimeofday
 # include <unistd.h>   // read, write, close
-# include <math.h>
-# include <stdbool.h>
 
 typedef struct s_image
 {
@@ -128,36 +128,10 @@ typedef struct s_cub
 
 typedef struct s_collision
 {
-	float	dist;    // distancia en UNIDADES DE CELDA
-	float	offset;  // desplazamiento (0..1) sobre la cara impactada
-	int		direction; // NORTH/SOUTH/EAST/WEST
-}	t_collision;
-
-char	get_map_cell(t_cub *cub, int grid_x, int grid_y);
-int	is_walkable_char(char c);
-int	check_collision(t_cub *cub, float world_x, float world_y);
-int	check_collision_radius(t_cub *cub, float x, float y, float r);
-float	deg_to_rad(float deg);
-float	sqr(float n);
-void	move_forward(t_cub *cub, float speed);
-void	move_backward(t_cub *cub, float speed);
-void	move_left(t_cub *cub, float speed);
-void	move_right(t_cub *cub, float speed);
-void	rotate_player(t_player *p, float angle);
-void	set_collision(t_collision *col, float dist, float offset, int dir);
-
-void	render_frame(t_cub *cub);
-int	safe_exit(t_cub *cub);
-void    cast_row_ray_down(t_cub *cub, float ray_angle, t_collision *hit);
-void    cast_row_ray_up(t_cub *cub, float ray_angle, t_collision *hit);
-void    cast_column_ray_right(t_cub *cub, float ray_angle, t_collision *hit);
-void    cast_column_ray_left(t_cub *cub, float ray_angle, t_collision *hit);
-t_collision	cast_ray(t_cub *cub, float ray_angle);
-
-void    init_collision(t_collision *col);
-void	init_hooks(t_cub *cub);
-int	rgb_to_int(int rgb[3]);
-
+	float dist;    // distancia en UNIDADES DE CELDA
+	float offset;  // desplazamiento (0..1) sobre la cara impactada
+	int direction; // NORTH/SOUTH/EAST/WEST
+}				t_collision;
 
 //....check_map.c....//
 int				check_valid_chars(t_cub *game);
@@ -177,23 +151,56 @@ char			**load_map(const char *file, t_cub *cub);
 int				normalize_map(t_cub *game);
 //....textures_color.c....//
 int				parse_color_line(char *line, t_cub *game);
-
 void			parse_texture_line(char *line, t_cub *cub);
-
 //....utils_parse.c....//
 int				is_valid_map_char(char c);
 int				is_player(char c);
 //....validate_map.c....//
 int				validate_map(t_cub *game);
+//....collision.c....//
+char			get_map_cell(t_cub *cub, int grid_x, int grid_y);
+int				is_walkable_char(char c);
+int				check_collision(t_cub *cub, float world_x, float world_y);
+int				check_collision_radius(t_cub *cub, float x, float y, float r);
+//....math_utils.c....//
+float			deg_to_rad(float deg);
+float			sqr(float n);
+int				safe_exit(t_cub *cub);
+int				rgb_to_int(int rgb[3]);
+//....player_move.c....//
+void			move_forward(t_cub *cub, float speed);
+void			move_backward(t_cub *cub, float speed);
+void			move_left(t_cub *cub, float speed);
+void			move_right(t_cub *cub, float speed);
+void			rotate_player(t_player *p, float angle);
+//....ray_player.c....//
+void			init_hooks(t_cub *cub);
+//....raycasting_cast.c....//
+void			init_collision(t_collision *col);
+t_collision		cast_ray(t_cub *cub, float ray_angle);
+//....raycasting_horiz.c....//
+void			set_collision(t_collision *col, float dist, float offset,
+					int dir);
+void			cast_row_ray_down(t_cub *cub, float ray_angle,
+					t_collision *hit);
+void			cast_row_ray_up(t_cub *cub, float ray_angle, t_collision *hit);
+//....raycasting_vert.c....//
+void			cast_column_ray_right(t_cub *cub, float ray_angle,
+					t_collision *hit);
+void			cast_column_ray_left(t_cub *cub, float ray_angle,
+					t_collision *hit);
+//....render_frame.c....//
+void			render_frame(t_cub *cub);
+//....cub3d.c....//
+int				cub3d(t_cub *cub);
 //....error.c....//
 int				ft_error(int i);
 int				ft_error_mlx(int i);
-
-int				load_textures(t_cub *cub);
-int				cub3d(t_cub *cub);
 //....init.c....//
-void init_player(t_cub *cub);
-void	init_texture_paths(t_cub *cub);
-void	init_struct(t_cub *cub);
+void			init_player(t_cub *cub);
+void			init_texture_paths(t_cub *cub);
+void			init_struct(t_cub *cub);
+//....load_textures.c....//
+int				load_textures(t_cub *cub);
 
 #endif

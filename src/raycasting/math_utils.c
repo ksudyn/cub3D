@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 18:00:06 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/08/21 18:53:41 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/08/22 19:29:58 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,3 +55,6 @@ int	rgb_to_int(int rgb[3])
 	color = (rgb[0] << 16) | (rgb[1] << 8) | rgb[2];
 	return (color);
 }
+//Esta funcion se encarga de cargar el color de suelo y techo que pongamos
+//Lo ponemos en el map.cub con las letras F y C
+//y se guardan en una variable en el parseo

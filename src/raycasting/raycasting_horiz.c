@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 17:11:22 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/08/21 19:40:38 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/08/22 19:03:35 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,3 +89,12 @@ void	cast_row_ray_up(t_cub *cub, float angle, t_collision *hit)
 // cast_row_ray_up: Igual que la anterior,
 // pero buscando hacia arriba y restando un poco (-0.0001f)
 // para evitar colisiones dobles en el mismo bloque.
+
+// Parte Horizontal (NORTH/SOUTH)
+// Cuando lanzas un rayo hacia el SOUTH,
+// el jugador avanza hacia abajo en el mapa → cada paso en y es +CELL_SIZE.
+// Cuando lanzas un rayo hacia el NORTH,
+// el jugador avanza hacia arriba → cada paso en y es -CELL_SIZE.
+// Por eso en el código:
+// cast_row_ray_down → y_step = +CELL_SIZE
+// cast_row_ray_up → y_step = -CELL_SIZE

@@ -6,11 +6,16 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 17:30:36 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/08/21 19:39:33 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/08/22 19:53:20 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
+// Estas dos funciones (init_collision y cast_ray)
+// son responsables de lanzar un rayo desde el jugador
+// y detectar contra qué pared choca primero
+// y asi poder dibujar correctamente las paredes en 3D.
 
 void	init_collision(t_collision *col)
 {
@@ -48,3 +53,24 @@ t_collision	cast_ray(t_cub *cub, float ray_angle)
 		final = hit_v;
 	return (final);
 }
+//Aquí se inicializan las colisiones
+// hit_h hace el impacto contra una línea horizontal del grid
+// (pared detectada arriba o abajo).
+// hit_v → impacto contra una línea vertical del grid
+// (pared detectada a izquierda o derecha).
+
+// ray_angle normaliza el ángulo del rayo (0 a 2π),
+// para que siempre esté en el rango correcto.
+
+// Lanza un rayo horizontal:
+// Si el ángulo está entre 0 y π, el rayo apunta hacia abajo (cast_row_ray_down).
+// Si no → apunta hacia arriba (cast_row_ray_up).
+
+// Lanza un rayo vertical:
+// Si el ángulo está entre 0 y π/2 o mayor a 3π/2,
+// apunta hacia la derecha (cast_column_ray_right).
+// Si no → apunta hacia la izquierda (cast_column_ray_left).
+
+// Compara distancias (hit_h.dist vs hit_v.dist).
+// El más pequeño es la pared real más cercana que el rayo golpea.
+// Se guarda en final y se devuelve.

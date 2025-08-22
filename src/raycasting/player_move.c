@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 18:08:16 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/08/21 18:53:59 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/08/22 19:32:42 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ void	move_backward(t_cub *cub, float speed)
 	float	r;
 
 	r = 6.0f;
-	// Estás usando un radio r = 6.0f para evitar que el jugador atraviese paredes
-	// y el cálculo de celdas está correcto.
+	// Uso un radio r = 6.0f para evitar que el jugador atraviese paredes
+	// y el cálculo de celdas está correcto, basicamete para que no de segmentacion faull.
 	new_x = cub->player.x - cub->player.delta_x * speed;
 	new_y = cub->player.y - cub->player.delta_y * speed;
 	if (!check_collision_radius(cub, new_x, new_y, r))
@@ -92,7 +92,6 @@ void	rotate_player(t_player *player, float angle)
 	// Esto significa que delta_x y delta_y
 	// representan la dirección hacia donde mira el jugador.
 }
-
 // Rota al jugador cambiando su ángulo.
 // Calcula delta_x y delta_y que indican la dirección hacia donde mira.
 // delta_x y delta_y se usan luego en los movimientos para saber hacia dónde moverse.

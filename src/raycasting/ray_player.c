@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 16:48:58 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/08/21 18:54:40 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/08/22 19:45:49 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,12 @@ int	key_press_hook(int keycode, t_cub *cub)
 		safe_exit(cub);
 	return (0);
 }
+//Esta función se llama automáticamente cuando presionas una tecla.
+//En lugar de mover al jugador directamente aquí,
+//lo que hace es marcar una bandera (1) en la estructura cub->player.
+//Ejemplo: si presionas W, se activa cub->player.key_up = 1;.
+//Esto permite que el movimiento sea continuo mientras la tecla esté pulsada,
+//y no un solo "paso" por pulsación
 
 int	key_release_hook(int keycode, t_cub *cub)
 {
@@ -47,16 +53,22 @@ int	key_release_hook(int keycode, t_cub *cub)
 		cub->player.key_right = 0;
 	return (0);
 }
+//Esta función se llama cuando suelta la tecla.
+//Quita la bandera poniendo 0.
+//Ejemplo: cuando sueltas W, se desactiva cub->player.key_up.
+//Así el bucle principal sabe cuándo parar el movimiento.
 
 int	main_loop(t_cub *cub)
 {
 	float	speed;
 	float	rot_speed;
 
-	speed = 2.0f;
-	// esto es la velocidad de rotacion por frame.
-	// Cuanto mas alto mas rapido rotará.
 	rot_speed = 2.0f;
+	// Esto es la velocidad de rotacion por frame.
+	// Cuanto mas alto mas rapido rotará.
+	speed = 2.0f;
+	// Esto es la velocidad de moviemiento por frame.
+	// Cuanto mas alto mas rapido se movera.
 	if (cub->player.left_rotate)
 		rotate_player(&cub->player, -rot_speed);
 	if (cub->player.right_rotate)
@@ -72,6 +84,13 @@ int	main_loop(t_cub *cub)
 	render_frame(cub);
 	return (0);
 }
+//Este es el bucle de juego principal.
+//Se ejecuta en cada frame (gracias a mlx_loop_hook).
+//Lee las banderas que pusimos en key_press_hook y key_release_hook.
+//Si cub->player.key_up == 1, llama a move_forward.
+//Si cub->player.left_rotate == 1, rota al jugador a la izquierda, etc.
+//Finalmente, llama a render_frame(cub) para dibujar la nueva escena en pantalla.
+//Aquí se aplican los movimientos/rotaciones reales en base a las teclas presionadas.
 
 void	init_hooks(t_cub *cub)
 {
@@ -82,3 +101,9 @@ void	init_hooks(t_cub *cub)
 		cub);
 	mlx_loop_hook(cub->mlx->mlx, main_loop, cub);
 }
+//Aquí se registran los hooks (eventos) de la librería minilibx.
+//mlx_hook escucha eventos específicos en la ventana:
+//ON_KEYDOWN → llama a key_press_hook.
+//ON_KEYUP → llama a key_release_hook.
+//ON_DESTROY → cierra la ventana (safe_exit).
+//mlx_loop_hook → ejecuta main_loop en cada frame (mientras el programa corre).
