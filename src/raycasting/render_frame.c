@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 19:37:36 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/08/22 20:09:15 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/08/25 16:35:00 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,7 @@ void	render_frame(t_cub *cub)
 		draw_vertical_section(cub, x, col);
 		x++;
 	}
+	draw_minimap(cub);
 	mlx_put_image_to_window(cub->mlx->mlx, cub->mlx->mlx_win,
 		cub->mlx->img, 0, 0);
 }

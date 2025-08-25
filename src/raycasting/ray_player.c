@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 16:48:58 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/08/22 19:45:49 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/08/25 16:38:02 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,10 @@ int	main_loop(t_cub *cub)
 	float	speed;
 	float	rot_speed;
 
-	rot_speed = 2.0f;
+	rot_speed = 4.0f;
 	// Esto es la velocidad de rotacion por frame.
 	// Cuanto mas alto mas rapido rotará.
-	speed = 2.0f;
+	speed = 4.0f;
 	// Esto es la velocidad de moviemiento por frame.
 	// Cuanto mas alto mas rapido se movera.
 	if (cub->player.left_rotate)

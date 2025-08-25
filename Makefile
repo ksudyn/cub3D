@@ -6,7 +6,7 @@
 #    By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/25 20:00:22 by ksudyn            #+#    #+#              #
-#    Updated: 2025/08/21 19:10:12 by ksudyn           ###   ########.fr        #
+#    Updated: 2025/08/25 16:35:36 by ksudyn           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,7 @@ SRCS =	src/parse/check_map.c\
 		src/raycasting/raycasting_horiz.c\
 		src/raycasting/raycasting_vert.c\
 		src/raycasting/render_frame.c\
+		src/mini_map.c\
 	
 
 OBJS = $(SRCS:.c=.o)
