@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 15:33:05 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/09/01 17:27:46 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/09/12 20:36:56 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,11 @@ char	**read_map_lines(int fd, t_cub *cub)
 		line = get_next_line(fd);
 	}
 	cub->height = height;
+	
+	if (!cub->textures->floor_set)
+		return (ft_error(3), NULL);
+	if (!cub->textures->ceiling_set)
+		return (ft_error(3), NULL);
 	return (map);
 }
 
